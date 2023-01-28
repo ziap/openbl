@@ -5,8 +5,8 @@ LDLIBS=-lm -lglfw -lGL -lGLEW
 DEBUG_FLAGS=-Og -ggdb
 BUILD_FLAGS=-O3 -s
 
-WASM_CFLAGS=-O3 --target=wasm32 -flto -fno-builtin -nostdlib -fvisibility=hidden
-WASM_LDFLAGS=--no-entry --strip-all --lto-O3 --allow-undefined --export-dynamic
+WASM_CFLAGS=-O3 --target=wasm32 -flto -nostdlib -fvisibility=hidden -mbulk-memory -msimd128
+WASM_LDFLAGS=--no-entry --strip-debug --lto-O3 --allow-undefined --export-dynamic
 WASM_FLAGS=$(WASM_CFLAGS) $(foreach flag,$(WASM_LDFLAGS),-Wl,$(flag))
 
 INPUT_DIR=src
