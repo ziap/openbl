@@ -64,7 +64,7 @@ gdb ./debug/app
 
 ### Running
 
-For the native version, the executable is located at `./debug/app`
+For the native version, the executable is located at `./build/app`
 
 For the web version use a web server (See [above](#requirements)) to host the
 website.
