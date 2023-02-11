@@ -1,6 +1,7 @@
 CC=clang
-CFLAGS=-Wall -Wextra -pedantic -std=c99 -march=native -mtune=native
-LDLIBS=-lm -lglfw -lGL -lGLEW
+PKGS=glfw3 glew
+CFLAGS=-Wall -Wextra -pedantic -std=c99 -march=native -mtune=native $$(pkg-config --cflags $(PKGS))
+LDLIBS=-lm $$(pkg-config --libs $(PKGS))
 
 DEBUG_FLAGS=-Og -ggdb
 BUILD_FLAGS=-O3 -s

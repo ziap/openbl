@@ -22,17 +22,13 @@ By default, this template handles:
     + Vertex shader: Full-screen quad
     + Fragment shader: Time-varying color gradient that follows the mouse
 
-## How to use
-
-Don't. This is only for my use cases and programming style.
-
-## How to use (but for me)
+## How to use (this is also copy-pasted)
 
 - Replace all `example` with the new project name using `grep` or something.
 
 ### Requirements
 
-**Native build**
+**Linux build**
 
 - A C99 compiler
 - GNU make
@@ -44,9 +40,13 @@ Don't. This is only for my use cases and programming style.
 - Clang
 - A web server (ex: `python -m http.server`)
 
+**Windows build**
+
+- `¯\_(ツ)_/¯`
+
 ### Building
 
-Running this will compile both the native version and the web version
+Running this will compile both the Linux version and the web version
 
 ```
 make
@@ -64,7 +64,7 @@ gdb ./debug/app
 
 ### Running
 
-For the native version, the executable is located at `./build/app`
+For the Linux version, the executable is located at `./build/app`
 
 For the web version use a web server (See [above](#requirements)) to host the
 website.
@@ -74,7 +74,7 @@ website.
 - Better error reporting
 - Build-time shader compilation error
 - Texture loading
-- Text renderer
+- Text renderer (with SDF)
 - Ditch GLFW + GLEW for raw X11/Wayland/Win32
 - ~~Ditch Linux/Windows for a custom operating system~~
 - ~~Actually develop OpenGL software~~
