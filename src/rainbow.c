@@ -1,11 +1,11 @@
 #include "rainbow.h"
 
-#include "../shaders/rainbow.h"
+#include "../resources.h"
 #include "imports.h"
 #include "shader.h"
 
 void RainbowInit(Rainbow *rb) {
-  rb->program = create_program(rainbow_vert, rainbow_frag);
+  rb->program = create_program(shaders_rainbow_vert, shaders_rainbow_frag);
 
   rb->vao = glCreateVertexArray();
 

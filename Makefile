@@ -11,13 +11,9 @@ WASM_LDFLAGS=--no-entry --strip-debug --lto-O3 --allow-undefined --export-dynami
 WASM_FLAGS=$(WASM_CFLAGS) $(foreach flag,$(WASM_LDFLAGS),-Wl,$(flag))
 
 INPUT_DIR=src
-INPUTS=$(wildcard $(INPUT_DIR)/*.c)
+INPUTS=$(wildcard $(INPUT_DIR)/*.c) resources.c
 ENTRY=main.c
 OUTPUT=app
-
-SHADER_DIR=shaders
-FRAGMENT_SHADERS=$(wildcard $(SHADER_DIR)/*.frag)
-SHADER_OUTPUTS=$(patsubst %.frag, $(SHADER_DIR)/%.h, $(notdir $(FRAGMENT_SHADERS)))
 
 .PHONY: all build debug web clean
 all: build web
@@ -25,26 +21,19 @@ build: build/$(OUTPUT)
 debug: debug/$(OUTPUT)
 web: $(OUTPUT).wasm
 
-build/$(OUTPUT): $(ENTRY) $(INPUTS) $(SHADER_OUTPUTS)
+build/$(OUTPUT): $(ENTRY) $(INPUTS)
 	@mkdir -p build
-	$(CC) -o $@ $(ENTRY) $(INPUTS) $(CFLAGS) $(BUILD_FLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) $(BUILD_FLAGS) $(LDLIBS) -o $@ $^
 
-debug/$(OUTPUT): $(ENTRY) $(INPUTS) $(SHADER_OUTPUTS)
+debug/$(OUTPUT): $(ENTRY) $(INPUTS)
 	@mkdir -p debug
-	$(CC) -o $@ $(ENTRY) $(INPUTS) $(CFLAGS) $(DEBUG_FLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) $(DEBUG_FLAGS) $(LDLIBS) -o $@ $^
 
-$(OUTPUT).wasm: $(SHADER_OUTPUTS) $(INPUTS)
-	$(CC) $(WASM_FLAGS) $(CFLAGS) -o $@ $(INPUTS)
+$(OUTPUT).wasm: $(INPUTS)
+	$(CC) $(WASM_FLAGS) $(CFLAGS) -o $@ $^
 
-# TODO: Make a shader loader that checks for compilation error at build-time
-$(SHADER_OUTPUTS): $(SHADER_DIR)/%.h: $(SHADER_DIR)/%.frag $(SHADER_DIR)/%.vert
-	@echo Generating $@
-	@echo "static const char* $(basename $(notdir $@))_frag = " > $@
-	@sed 's/^/\"/g' $(word 1,$^) | sed 's/$$/\\n\"/g' >> $@
-	@echo ";" >> $@
-	@echo "static const char* $(basename $(notdir $@))_vert = " >> $@
-	@sed 's/^/\"/g' $(word 2,$^) | sed 's/$$/\\n\"/g' >> $@
-	@echo ";" >> $@
+resources.c: $(wildcard res/**) loader.py
+	python loader.py
 
 clean:
-	rm -rf build/ debug/
+	rm -rf build/ debug/ resources.c resources.h
