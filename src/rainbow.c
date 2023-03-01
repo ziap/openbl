@@ -1,7 +1,7 @@
 #include "rainbow.h"
 
-#include "../resources.h"
 #include "imports.h"
+#include "resources.h"
 #include "shader.h"
 
 void RainbowInit(Rainbow *rb) {

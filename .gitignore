@@ -1,5 +1,5 @@
 build/
 debug/
 
-resources.h
-resources.c
+src/resources.h
+src/resources.c

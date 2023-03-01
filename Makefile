@@ -11,7 +11,7 @@ WASM_LDFLAGS=--no-entry --strip-debug --lto-O3 --allow-undefined --export-dynami
 WASM_FLAGS=$(WASM_CFLAGS) $(foreach flag,$(WASM_LDFLAGS),-Wl,$(flag))
 
 INPUT_DIR=src
-INPUTS=$(wildcard $(INPUT_DIR)/*.c) resources.c
+INPUTS=$(wildcard $(INPUT_DIR)/*.c) src/resources.c
 ENTRY=main.c
 OUTPUT=app
 
@@ -32,8 +32,8 @@ debug/$(OUTPUT): $(ENTRY) $(INPUTS)
 $(OUTPUT).wasm: $(INPUTS)
 	$(CC) $(WASM_FLAGS) $(CFLAGS) -o $@ $^
 
-resources.c: $(wildcard res/**) loader.py
+src/resources.c: $(wildcard res/**) loader.py
 	python loader.py
 
 clean:
-	rm -rf build/ debug/ resources.c resources.h
+	rm -rf build/ debug/ src/resources.c src/resources.h

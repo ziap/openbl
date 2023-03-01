@@ -2,8 +2,8 @@
 
 import os
 
-resources_h = open('resources.h', 'w')
-resources_c = open('resources.c', 'w')
+resources_h = open('src/resources.h', 'w')
+resources_c = open('src/resources.c', 'w')
 
 resources_h.write('#ifndef RESOURCES_H\n')
 resources_h.write('#define RESOURCES_H\n\n')
