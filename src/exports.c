@@ -18,7 +18,7 @@ void update_mouse(float new_x, float new_y) {
 
 static Rainbow rainbow;
 
-void game_init() {
+void game_init(void) {
   glEnable(GL_DEPTH_TEST);
   RainbowInit(&rainbow);
 }

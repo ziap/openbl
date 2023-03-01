@@ -3,7 +3,7 @@
 
 #define export __attribute__((visibility("default")))
 
-export void game_init();
+export void game_init(void);
 export void game_update(float);
 
 export void resize(int, int);
